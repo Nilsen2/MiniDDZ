@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
-import { GAME_EVENT_ENUM, AUDIO_EFFECT_ENUM } from "./enum/Enum";
+import { GAME_EVENT_ENUM, AUDIO_EFFECT_ENUM, GAME_SCENE_ENUM } from "./enum/Enum";
 import { PLAY_AUDIO } from "./Event";
 
 const {ccclass, property} = cc._decorator;
@@ -14,21 +14,21 @@ const {ccclass, property} = cc._decorator;
 export default class MusicManager extends cc.Component {
     public static instance: MusicManager = null!;
     @property(cc.AudioClip)
-    clickButton: cc.AudioClip = null!;
+    clickButton: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    clear: cc.AudioClip = null!;
+    clear: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    clickBlock: cc.AudioClip = null!;
+    clickBlock: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    lose: cc.AudioClip = null!;
+    lose: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    win: cc.AudioClip = null!;
+    win: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    mainBgm: cc.AudioClip = null!;
+    mainBgm: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    gameBgm: cc.AudioClip = null!;
+    gameBgm: cc.AudioClip | null = null;
     @property(cc.AudioSource)
-    audioSource: cc.AudioSource = null!;
+    audioSource: cc.AudioSource | null = null;
 
     onLoad () {
         if (MusicManager.instance) {
@@ -44,21 +44,39 @@ export default class MusicManager extends cc.Component {
         PLAY_AUDIO.on(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
     }
 
+    onDestroy() {
+        // Unregister event listeners
+        cc.director.off(cc.Director.EVENT_AFTER_SCENE_LAUNCH, this.onSceneLaunched, this);
+        PLAY_AUDIO.off(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
+        if (MusicManager.instance === this) {
+            MusicManager.instance = null!;
+        }
+    }
+
     onSceneLaunched() {
         let currentScene = cc.director.getScene()?.name;
         this.updateBackGroundMusic(currentScene);
     }
 
-    updateBackGroundMusic(sceneName: string) {
-        this.audioSource.stop();
-        if (sceneName === "Menu") {
-            this.audioSource.clip = this.mainBgm;
-        } else if (sceneName === "Game") {
-            this.audioSource.clip = this.gameBgm;
+    updateBackGroundMusic(sceneName?: string) {
+        if(!this.audioSource) {
+            console.error("AudioSource is not assigned in MusicManager.");
+            return;
         }
-        if(this.audioSource.clip) {
-            this.audioSource.play();
+        let bgm: cc.AudioClip | null = null;
+
+        if (sceneName === GAME_SCENE_ENUM.MENU) {
+            bgm = this.mainBgm;
+        } else if (sceneName === GAME_SCENE_ENUM.GAME) {
+            bgm = this.gameBgm;
         }
+
+        if (!bgm) {
+            return;
+        }
+
+        this.audioSource.clip = bgm;
+        this.audioSource.play();
     }
 
     onPlayAudio(type: AUDIO_EFFECT_ENUM) {
