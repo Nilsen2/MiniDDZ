@@ -1,0 +1,1 @@
+export const PLAY_AUDIO = new cc.EventTarget();
