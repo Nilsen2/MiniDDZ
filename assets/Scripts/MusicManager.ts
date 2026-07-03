@@ -59,10 +59,11 @@ export default class MusicManager extends cc.Component {
     }
 
     updateBackGroundMusic(sceneName?: string) {
-        if(!this.audioSource) {
+        if (!this.audioSource) {
             console.error("AudioSource is not assigned in MusicManager.");
             return;
         }
+
         let bgm: cc.AudioClip | null = null;
 
         if (sceneName === GAME_SCENE_ENUM.MENU) {
@@ -75,7 +76,13 @@ export default class MusicManager extends cc.Component {
             return;
         }
 
+        if (this.audioSource.clip === bgm && this.audioSource.isPlaying) {
+            return;
+        }
+
+        this.audioSource.stop();
         this.audioSource.clip = bgm;
+        this.audioSource.loop = true;
         this.audioSource.play();
     }
 
