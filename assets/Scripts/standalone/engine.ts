@@ -47,7 +47,7 @@ export default class DouDizhuStandalone {
         const firstPlayerIndex = Math.floor(
             (options.random ?? Math.random)() * 3
         );
-        this.currentPlayerIndex = 0//firstPlayerIndex;
+        this.currentPlayerIndex = firstPlayerIndex;
         this.landlordId = null;
         this.lastPlay = null;
         this.passCount = 0;
