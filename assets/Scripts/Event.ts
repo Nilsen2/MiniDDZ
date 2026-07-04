@@ -1,1 +1,1 @@
-export const PLAY_AUDIO = new cc.EventTarget();
+export const MINIDDZ_EVENT = new cc.EventTarget();

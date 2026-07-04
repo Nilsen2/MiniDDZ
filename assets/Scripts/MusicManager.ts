@@ -6,7 +6,7 @@
 //  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
 
 import { GAME_EVENT_ENUM, AUDIO_EFFECT_ENUM, GAME_SCENE_ENUM } from "./enum/Enum";
-import { PLAY_AUDIO } from "./Event";
+import { MINIDDZ_EVENT } from "./Event";
 
 const {ccclass, property} = cc._decorator;
 
@@ -18,11 +18,15 @@ export default class MusicManager extends cc.Component {
     @property(cc.AudioClip)
     clear: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    clickBlock: cc.AudioClip | null = null;
+    buyao: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    lose: cc.AudioClip | null = null;
+    chupai: cc.AudioClip | null = null;
     @property(cc.AudioClip)
-    win: cc.AudioClip | null = null;
+    jiaodizhu: cc.AudioClip | null = null;
+    @property(cc.AudioClip)
+    bujiao: cc.AudioClip | null = null;
+    @property(cc.AudioClip)
+    fapai: cc.AudioClip | null = null;
     @property(cc.AudioClip)
     mainBgm: cc.AudioClip | null = null;
     @property(cc.AudioClip)
@@ -41,13 +45,13 @@ export default class MusicManager extends cc.Component {
         // Register event listeners
         cc.director.on(cc.Director.EVENT_AFTER_SCENE_LAUNCH, this.onSceneLaunched, this);
         // Register event listener for audio playback
-        PLAY_AUDIO.on(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
+        MINIDDZ_EVENT.on(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
     }
 
     onDestroy() {
         // Unregister event listeners
         cc.director.off(cc.Director.EVENT_AFTER_SCENE_LAUNCH, this.onSceneLaunched, this);
-        PLAY_AUDIO.off(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
+        MINIDDZ_EVENT.off(GAME_EVENT_ENUM.PLAY_AUDIO, this.onPlayAudio, this);
         if (MusicManager.instance === this) {
             MusicManager.instance = null!;
         }
@@ -95,14 +99,20 @@ export default class MusicManager extends cc.Component {
             case AUDIO_EFFECT_ENUM.CLEAR:
                 audioClip = this.clear;
                 break;
-            case AUDIO_EFFECT_ENUM.CLICK_BLOCK:
-                audioClip = this.clickBlock;
+            case AUDIO_EFFECT_ENUM.BUYAO:
+                audioClip = this.buyao;
                 break;
-            case AUDIO_EFFECT_ENUM.LOSE:
-                audioClip = this.lose;
+            case AUDIO_EFFECT_ENUM.CHUPAI:
+                audioClip = this.chupai;
                 break;
-            case AUDIO_EFFECT_ENUM.WIN:
-                audioClip = this.win;
+            case AUDIO_EFFECT_ENUM.JIAODIZHU:
+                audioClip = this.jiaodizhu;
+                break;
+            case AUDIO_EFFECT_ENUM.BUJIAO:
+                audioClip = this.bujiao;
+                break;
+            case AUDIO_EFFECT_ENUM.FAPAI:
+                audioClip = this.fapai;
                 break;
         }
         if (audioClip) {

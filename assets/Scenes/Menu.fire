@@ -1284,7 +1284,7 @@
     },
     "component": "",
     "_componentId": "886d5f7nQlCmYsp24wPOtb1",
-    "handler": "onGameStart",
+    "handler": "onCreateRoom",
     "customEventData": ""
   },
   {
@@ -1635,6 +1635,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "creatroom_prefabs": {
+      "__uuid__": "ff9d36b9-29c6-4e87-bcd3-f1f5c872da69"
+    },
     "_id": "af1UGrd0ZNAp8oCOGZbmp5"
   },
   {
@@ -1735,14 +1738,20 @@
     "clear": {
       "__uuid__": "44487476-67c0-4cc5-9416-8fe641155454"
     },
-    "clickBlock": {
-      "__uuid__": "d218a348-bae7-436b-a5e5-4252cdc2d5fa"
+    "buyao": {
+      "__uuid__": "a2ae9c18-2f71-4975-a960-7e1db4e68e4e"
     },
-    "lose": {
-      "__uuid__": "48270540-b04c-4134-873e-0ae4c3555305"
+    "chupai": {
+      "__uuid__": "906d9b07-53d1-4303-9d72-6eb900d717bc"
     },
-    "win": {
-      "__uuid__": "2b8f23fe-89a6-409d-95c4-ae06708266c9"
+    "jiaodizhu": {
+      "__uuid__": "35b436b2-298f-4615-9e30-7532f003e0d9"
+    },
+    "bujiao": {
+      "__uuid__": "0ba9ca5d-4e94-4247-9f32-0d1d9ca2bcd7"
+    },
+    "fapai": {
+      "__uuid__": "2b7b0bce-2a2c-49ac-937b-c7429a18704a"
     },
     "mainBgm": {
       "__uuid__": "1b36260f-b07a-4708-a730-c8e6d9400e7a"
