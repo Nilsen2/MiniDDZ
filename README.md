@@ -1,3 +1,10 @@
+
+## 预览
+[欢乐斗地主](https://nilsen2.github.io/MiniDDZ/build/web-mobile/)
+
+[我要验牌](https://nilsen2.github.io/MiniDDZ/build/web-yanpai/)
+
+
 # miniDdz 项目文档
 
 一个基于 **Cocos Creator 2.4.11**（JS 引擎 + TypeScript）实现的斗地主（Dou Dizhu）单机小样例（三人局：玩家 + 2 个本地 AI）。项目定位是"最小可玩闭环"的斗地主 Demo，重点在于把**纯逻辑的游戏规则引擎**与 **Cocos 表现层**彻底解耦。
