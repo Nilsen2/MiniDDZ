@@ -178,7 +178,7 @@ export default class PlayerView extends cc.Component {
 
     showClock(seconds: number) {
 
-        this.unscheduleAllCallbacks();
+        this.unschedule(this.updateClock);
 
         this.countdown = seconds;
 
@@ -202,7 +202,7 @@ export default class PlayerView extends cc.Component {
 
     hideClock() {
 
-        this.unscheduleAllCallbacks();
+        this.unschedule(this.updateClock);
 
         this.clockNode.active = false;
     }
@@ -239,13 +239,11 @@ export default class PlayerView extends cc.Component {
 
     }
     showHandCards(cards: Card[]) {
-
         this.clearHandCards();
 
         let index = 0;
 
         this.schedule(() => {
-
             if (index >= cards.length) {
                 return;
             }
@@ -384,6 +382,8 @@ export default class PlayerView extends cc.Component {
         this.clearHandCards();
 
         this.clearOutCards();
+
+        this.clearSelectedCards();
 
     }
 }

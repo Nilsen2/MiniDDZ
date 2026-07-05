@@ -215,7 +215,6 @@ export default class DouDizhuStandalone {
 
     private assertCurrentPlayer(playerId: string) {
         const currentPlayer = this.players[this.currentPlayerIndex];
-        console.log("Current player:", currentPlayer);
         if (!currentPlayer || currentPlayer.id !== playerId) {
             throw new Error(`It is not ${playerId}'s turn.`);
         }

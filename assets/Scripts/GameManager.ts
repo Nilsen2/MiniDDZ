@@ -85,6 +85,7 @@ export default class GameManager extends cc.Component {
             this.selfAction.active = true;
         } else {
             this.selfAction.active = false;
+            this.playerLayer.showClockForPlayer(result.currentPlayerId);
             this.autoPlayForCurrentPlayer(result.currentPlayerId);
         }
     }
@@ -96,13 +97,16 @@ export default class GameManager extends cc.Component {
         }
         this.scheduleOnce(() => {
             const snapshot = this.game.autoPlay(currentPlayerId);
+            // console.log("currentPlayerId:", currentPlayerId);
             // console.log("Auto play result:", snapshot);
             if(currentPlayerId === snapshot.lastPlay?.playerId) {
                 MINIDDZ_EVENT.emit(GAME_EVENT_ENUM.PLAY_AUDIO, AUDIO_EFFECT_ENUM.CHUPAI);
                 this.playerLayer.showOutCards(currentPlayerId, snapshot.lastPlay?.combo.cards);
                 this.playerLayer.dealCards(snapshot.players, true);
             } else {
+                // console.log("Player passed:", currentPlayerId);
                 this.playerLayer.hideClockForPlayer(currentPlayerId);
+                this.playerLayer.showClockForPlayer(snapshot.currentPlayerId);
                 MINIDDZ_EVENT.emit(GAME_EVENT_ENUM.PLAY_AUDIO, AUDIO_EFFECT_ENUM.BUYAO);
             }
             if(snapshot.phase === GamePhase.GameOver) {
@@ -151,7 +155,7 @@ export default class GameManager extends cc.Component {
     }
 
     onPlayerReady(data: { playerId: string }) {
-        console.log("Player ready:", data);
+        // console.log("Player ready:", data);
         if (data.playerId === "1") {
             this.readyMap.self = true;
         } else if (data.playerId === "2") {
@@ -162,9 +166,9 @@ export default class GameManager extends cc.Component {
     }
 
     onPlayerBid(data: { playerId: number; rob: boolean }) {
-        console.log("Player bid:", data);
+        // console.log("Player bid:", data);
         this.gameState = this.game.bid(data.playerId.toString(), data.rob);
-        console.log("Updated game state after bid:", this.gameState);
+        // console.log("Updated game state after bid:", this.gameState);
         this.checkBidPhase();
     }
 
@@ -203,6 +207,7 @@ export default class GameManager extends cc.Component {
                 this.selfAction.active = true;
             } else {
                 this.selfAction.active = false;
+                this.autoPlayForCurrentPlayer(this.gameState.currentPlayerId);
             }
             this.playerLayer.showBottomCards(this.gameState.bottomCards);
             this.playerLayer.setLandlord(this.gameState.landlordId);

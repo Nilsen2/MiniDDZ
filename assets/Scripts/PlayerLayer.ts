@@ -52,6 +52,15 @@ export default class PlayerLayer extends cc.Component {
             this.rightPlayer.hideClock();
         }
     }
+    showClockForPlayer(playerId: string | null) {
+        if (playerId === "1") {
+            // this.selfPlayer.showClock(10);
+        } else if (playerId === "2") {
+            this.leftPlayer.showClock(10);
+        } else if (playerId === "3") {
+            this.rightPlayer.showClock(10);
+        }
+    }
     showOutCards(playerId: string | null, cards: Card[] | undefined) {
         if (!cards || cards.length === 0) {
             return;
@@ -157,6 +166,7 @@ export default class PlayerLayer extends cc.Component {
 
         // 自己（真实牌）
         if (updateSelf) {
+            this.selfPlayer.clearSelectedCards();
             this.selfPlayer.showHadddndCards(self.hand);
         } else {
             this.selfPlayer.showHandCards(self.hand);
