@@ -31,9 +31,9 @@ export default class StandaloneHandExample extends cc.Component {
             playerNames: ["玩家", "机器人A", "机器人B"],
         });
 
-        state = this.game.bid(state.currentPlayerId!, 1);
-        state = this.game.bid(state.currentPlayerId!, 0);
-        state = this.game.bid(state.currentPlayerId!, 2);
+        state = this.game.bid(state.currentPlayerId!, true);
+        state = this.game.bid(state.currentPlayerId!, false);
+        state = this.game.bid(state.currentPlayerId!, true);
 
         const self = state.players.find(player => player.id === "self");
         if (self) {
